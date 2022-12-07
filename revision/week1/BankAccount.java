@@ -1,4 +1,4 @@
-package revision;
+package week1;
 
 public class BankAccount {
     private double balance;
