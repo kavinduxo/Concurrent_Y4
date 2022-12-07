@@ -1,3 +1,4 @@
+package tempo;
 public class SubClass extends SuperClass implements Runnable {
     public void run() {
         System.out.println("Thread is running....");
