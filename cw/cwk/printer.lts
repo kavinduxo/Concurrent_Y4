@@ -1,0 +1,28 @@
+const MAX_DRAWER = 3
+const MIN_DRAWER = 1
+const STD2_DOCS = 2
+const STD3_DOCS = 3
+
+range DRAWER_RANGE = 0 .. MAX_DRAWER
+set ALL_ACTIONS = { acquireStd, acquireTech, release, print, refill }
+
+PRINTER_PROCESS ( DRAWER = MAX_DRAWER ) = PRINTER_PROCESS [ DRAWER ],
+PRINTER_PROCESS [ i : DRAWER_RANGE ] =
+				if ( i >= MIN_DRAWER )
+				then ( acquireStd -> print -> release -> PRINTER_PROCESS [ i - 1] )
+				else ( acquireTech -> refill -> release -> PRINTER_PROCESS [ MAX_DRAWER ] ) . 
+
+STUDENT_PROCESS ( DOC_COUNT = 0 ) = STUDENT_PROCESS [ DOC_COUNT ],
+STUDENT_PROCESS [ i : 0 .. DOC_COUNT ] =
+				if ( i > 0 )
+				then ( acquireStd -> print[ i ] ->
+					if ( i > 0 )
+					then ( release -> STUDENT_PROCESS [ i - 1 ] )
+					else ( release -> END ) 
+				) 
+				else END + ALL_ACTIONS / { print / print [ i : 0 .. DOC_COUNT ] } .
+
+TECHNICIAN_PROCESS = ( acquireTech -> refill -> release -> TECHNICIAN_PROCESS
+			 		 ) + ALL_ACTIONS . 
+
+||PRINTING_SYSTEM = ( std2: STUDENT_PROCESS ( STD2_DOCS ) || std3: STUDENT_PROCESS ( STD3_DOCS ) || tech: TECHNICIAN_PROCESS || { std2, std3, tech } :: PRINTER_PROCESS ) .
