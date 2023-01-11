@@ -1,8 +1,17 @@
+/**
+ * ********************************************************************
+ * Author:  Kavindu Gunathilake
+ * UoWID:   W1761405
+ * Date:      23/01/11
+ * ***********************************************************************
+ */
+
 public class TonerTechnician extends Thread {
     String techId;
     String techName;
     ThreadGroup threadGroup;
     Printer printer;
+
     public String getTechName() {
         return techName;
     }
@@ -23,12 +32,12 @@ public class TonerTechnician extends Thread {
             System.out.println("TONER TECH: Printer Status " + printer.toString());
 
             //Make thread sleep after replace the Toner cartridge of the printer
-            int randomMilliSeconds = (int)Math.floor(Math.random() * (5000 - 1000 + 1) + 1000);
+            int randomMilliSeconds = (int) Math.floor(Math.random() * (5000 - 1000 + 1) + 1000);
 
             try {
                 sleep(randomMilliSeconds);
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                System.out.println("TONER TECH: " + e.getMessage());
             }
         }
     }

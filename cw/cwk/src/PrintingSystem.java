@@ -1,3 +1,11 @@
+/**
+ * ********************************************************************
+ * Author:  Kavindu Gunathilake
+ * UoWID:   W1761405
+ * Date:      23/01/11
+ * ***********************************************************************
+ */
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -16,8 +24,8 @@ public class PrintingSystem {
         Scanner mainScanner = new Scanner(System.in);
 
         for (int i = 0; i < 4; i++) {
-            String stdId = "std-" + i;
-            System.out.print("Enter Student " + i + " name: ");
+            String stdId = "std-" + (i + 1);
+            System.out.print("Enter Student " + (i + 1) + " name: ");
             String stdName = mainScanner.next();
 
             Student student = new Student(stdId, stdName, stdThreadGrp, printer);
@@ -27,13 +35,13 @@ public class PrintingSystem {
         TonerTechnician tonerTechnician = new TonerTechnician("tech-1", "Toner Tech", techThreadGrp, printer);
         PaperTechnician paperTechnician = new PaperTechnician("tech-2", "Paper Tech", techThreadGrp, printer);
 
-        try{
+        try {
             studentList.get(0).start();
             studentList.get(1).start();
             studentList.get(2).start();
             studentList.get(3).start();
-        }catch (Exception e){
-            e.printStackTrace();
+        } catch (Exception e) {
+            System.out.println("MONITOR: " + e.getMessage());
         }
 
         tonerTechnician.start();
@@ -41,21 +49,21 @@ public class PrintingSystem {
 
         try {
             studentList.get(0).join();
-            System.out.println(studentList.get(0).stdName + " work completed.");
+            System.out.println(studentList.get(0).getStdName() + " Finished printing: 5 Documents, " + studentList.get(0).getTotalNoOfPapers() + " pages.");
             studentList.get(1).join();
-            System.out.println(studentList.get(1).stdName + " work completed");
+            System.out.println(studentList.get(1).getStdName() + " Finished printing: 5 Documents, " + studentList.get(1).getTotalNoOfPapers() + " pages.");
             studentList.get(2).join();
-            System.out.println(studentList.get(2).stdName + " work completed");
+            System.out.println(studentList.get(2).getStdName() + " Finished printing: 5 Documents, " + studentList.get(2).getTotalNoOfPapers() + " pages.");
             studentList.get(3).join();
-            System.out.println(studentList.get(3).stdName + " work completed");
+            System.out.println(studentList.get(3).getStdName() + " Finished printing: 5 Documents, " + studentList.get(3).getTotalNoOfPapers() + " pages.");
             paperTechnician.join();
-            System.out.println(paperTechnician.techName + " work completed");
+            System.out.println("Paper Technician(" + paperTechnician.getTechName() + ") Finished, packs of paper used: " + ((LaserPrinter) printer).getNoOfPaperPacksRefill());
             tonerTechnician.join();
-            System.out.println(tonerTechnician.techName + " work completed");
+            System.out.println("Toner Technician(" + tonerTechnician.getTechName() + ") Finished, cartridges replaced: " + ((LaserPrinter) printer).getNoOfTonerRefill());
 
             System.out.println("Printing process Completed!");
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            System.out.println("MONITOR: " + e.getMessage());
         }
 
     }
