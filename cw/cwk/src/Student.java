@@ -40,7 +40,8 @@ public class Student extends Thread {
             String docName = "Document Bundle-" + (i + 1);
             docNametList.add(i, docName);
 
-            int docSize = (int) Math.floor(Math.random() * (25 - 1 + 1) + 1);
+            //max numbers set to 20 size it can only make 400(20*4*5)
+            int docSize = (int) Math.floor(Math.random() * (20 - 1 + 1) + 1);
             docSizeList.add(i, docSize);
 
 //            try {
