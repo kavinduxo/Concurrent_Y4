@@ -20,6 +20,7 @@ public class TonerTechnician extends Thread {
 
             //Refilling the papers of printer
             ((LaserPrinter) printer).replaceTonerCartridge();
+            System.out.println("TONER TECH: Printer Status " + printer.toString());
 
             //Make thread sleep after replace the Toner cartridge of the printer
             int randomMilliSeconds = (int)Math.floor(Math.random() * (5000 - 1000 + 1) + 1000);
