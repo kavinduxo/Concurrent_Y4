@@ -22,7 +22,7 @@ STUDENT_PROCESS [ i : 0 .. DOC_COUNT ] =
 				) 
 				else END + ALL_ACTIONS / { print / print [ i : 0 .. DOC_COUNT ] } .
 
-TECHNICIAN_PROCESS = ( acquireTech -> refill -> release -> TECHNICIAN_PROCESS
+TECHNICIAN_PROCESS = ( acquireTech -> refill -> release -> TECHNICIAN_PROCESS | wait -> TECHNICIAN_PROCESS
 			 		 ) + ALL_ACTIONS . 
 
 ||PRINTING_SYSTEM = ( std2: STUDENT_PROCESS ( STD2_DOCS ) || std3: STUDENT_PROCESS ( STD3_DOCS ) || tech: TECHNICIAN_PROCESS || { std2, std3, tech } :: PRINTER_PROCESS ) .
